@@ -1,10 +1,11 @@
 ﻿@page "/local-weather"
 @attribute [StreamRendering]
 @attribute [Authorize]
+@inject IHttpClientFactory httpClientFactory
 
 <PageTitle>Weather</PageTitle>
 
-<h1>Weather</h1>
+<h1 class="">Local Weatherforecast loaded from api</h1>
 
 <p>This component demonstrates showing data.</p>
 
@@ -14,8 +15,8 @@
 }
 else
 {
-    <table class="table">
-        <thead>
+    <table class="table table-hover">
+        <thead class="table-dark">
             <tr>
                 <th>Date</th>
                 <th aria-label="Temperature in Celsius">Temp. (C)</th>
@@ -27,7 +28,7 @@ else
             @foreach (var forecast in forecasts)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.Date.ToLongDateString()</td>
                     <td>@forecast.TemperatureC</td>
                     <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
@@ -39,20 +40,14 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    public HttpClient weatherApiClient;
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
+        weatherApiClient = httpClientFactory.CreateClient("weather-api");
 
-        var startDate = DateOnly.FromDateTime(DateTime.Now);
-        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
-        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = summaries[Random.Shared.Next(summaries.Length)]
-        }).ToArray();
+        var response = await weatherApiClient.GetFromJsonAsync<WeatherForecast[]>("/weatherforecast/");
+        forecasts = response != null ? response.ToArray() : [];
     }
 
     private class WeatherForecast
@@ -63,4 +58,3 @@ else
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }
-

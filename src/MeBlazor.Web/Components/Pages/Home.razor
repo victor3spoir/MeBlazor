@@ -20,7 +20,18 @@
         </p>
       </NotAuthorized>
       <Authorized>
-        <p>You are logged adipisicing <span class="bg-primary p-2 rounded">@context.User.Identity!.Name</span></p>
+        <p>You are logged adipisicing <span class="bg-success">@context.User.Identity!.Name</span></p>
+        <p>
+          <NavLink href="/account/logout" class="btn btn-danger">
+            Logout
+          </NavLink>
+        </p>
+        <ul>
+          @foreach (var claim in context.User.Claims)
+          {
+            <li>@claim.Type <span>@claim.Value.ToString()</span></li>
+          }
+        </ul>
       </Authorized>
     </AuthorizeView>
   </div>

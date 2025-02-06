@@ -3,6 +3,7 @@ using MeBlazor.Web.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
+var config = builder.Configuration;
 
 builder.Services.AddAntiforgery();
 builder.Services.AddAuthentication(o =>
@@ -22,6 +23,12 @@ builder.Services.AddCascadingAuthenticationState();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddHttpClient("weather-api", o =>
+{
+    var baseAddress = config["WEATHER_API_ENDPOINT"]!;
+    o.BaseAddress = new Uri(baseAddress);
+});
 
 var app = builder.Build();
 
