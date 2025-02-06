@@ -30,6 +30,7 @@ builder.Services.AddHttpClient("weather-api", o =>
     o.BaseAddress = new Uri(baseAddress);
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
