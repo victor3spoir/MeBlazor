@@ -2,6 +2,26 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<div>
+  <div>
+    <h1>Homepage</h1>
+    <p>
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero animi quam id dolores dolorem enim veritatis.
+      Exercitationem voluptas ab tempore?
+    </p>
+    <small>Welcome to your new app.</small>
+  </div>
 
-Welcome to your new app.
+  <div class="mt-4 p-2">
+    <h2>Login status</h2>
+    <AuthorizeView>
+      <NotAuthorized>
+        <p>You are not logged in, <NavLink href="/account/login">please, login</NavLink>
+        </p>
+      </NotAuthorized>
+      <Authorized>
+        <p>You are logged adipisicing <span class="bg-primary p-2 rounded">@context.User.Identity!.Name</span></p>
+      </Authorized>
+    </AuthorizeView>
+  </div>
+</div>
