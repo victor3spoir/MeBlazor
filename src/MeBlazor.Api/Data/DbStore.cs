@@ -29,7 +29,7 @@ namespace MeBlazor.Api.Data
 
         public async Task<IList<TaskItem>> GetAll()
         {
-            return await _context.TaskItems.OrderBy(item => item.TaskName).ToListAsync();
+            return await _context.TaskItems.OrderBy(item => item.Title).ToListAsync();
         }
 
         public async Task Save()
