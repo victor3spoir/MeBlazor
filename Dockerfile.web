@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+WORKDIR /app
+COPY *.sln .
+COPY src/MeBlazor.Shared/*.csproj MeBlazor.Shared/
+COPY src/MeBlazor.Web/*.csproj MeBlazor.Web/
+RUN dotnet restore MeBlazor.Web/
+COPY src/MeBlazor.Web/ MeBlazor.Web/
+COPY src/MeBlazor.Shared/ MeBlazor.Shared/
+RUN dotnet publish MeBlazor.Web/ -c release -o ./out
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS prod
+WORKDIR /app
+ENV ASPNETCORE_HTTP_PORTS=8080
+ENV ASPNETCORE_ENVIRONMENT=Production
+ENV WEATHER_API_ENDPOINT=http://localhost
+COPY --from=build /app/out/ .
+EXPOSE 8080
+CMD [ "dotnet", "MeBlazor.Web.dll" ]

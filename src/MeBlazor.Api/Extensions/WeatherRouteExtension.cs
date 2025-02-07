@@ -12,8 +12,9 @@ namespace MeBlazor.Api.Extensions
             var summaries = new[]{
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
-
-            app.MapGet("/weatherforecast", () =>
+            var group = app.MapGroup("/weatherforecast")
+            .WithTags("weatherforecast");
+            group.MapGet("/", () =>
             {
                 var forecast = Enumerable.Range(1, 20).Select(index =>
                     new WeatherForecast

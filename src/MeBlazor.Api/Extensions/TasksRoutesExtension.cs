@@ -11,7 +11,8 @@ namespace MeBlazor.Api.Extensions
 
         public static void MapTasksRoutes(this WebApplication app)
         {
-            var groups = app.MapGroup("/api/taskitems");
+            var groups = app.MapGroup("/api/taskitems")
+            .WithTags("tasks");
 
             groups.MapGet("/", async (IDbStore store) =>
             {

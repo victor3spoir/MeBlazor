@@ -3,15 +3,15 @@
 
 
 <div class="row-cols-2">
-  <div class="col">
+  <div class="col p-2 bg-secondary rounded" style="min-height: 75vh; max-height: 600px">
     <h2>All Tasks</h2>
     <div class="input-group">
-      <input type="text" class="form-control m-1" placeholder="Enter Task" @bind="newTask" />
-      <button type="button" class="btn btn-success" @onclick="AddTask">
+      <input type="text" class="form-control" placeholder="Enter Task" @bind="newTask" />
+      <button type="button" class="btn btn-success btn-sm" @onclick="AddTask">
         Add
       </button>
     </div>
-    <div class="mt-3 ">
+    <div class="mt-3 pr-6" style="max-height: 400px;overflow-y: scroll;">
       @if (tasks is null)
       {
         <span>Loading....</span>
@@ -25,16 +25,16 @@
 
         @foreach (var task in tasks)
         {
-          <div class="d-flex  mx-auto border-bottom" @key="task">
+          <div class="d-flex  mx-auto border border-dark rounded-2 p-1 my-2" @key="task">
             <div class="p-2 flex-fill">
-              <input type="checkbox" checked="@task.IsComplete" @onchange="@(() => ToggleTaskStatus(task))" />
+              <input type="checkbox" class="form-check-inline" checked="@task.IsComplete"
+                @onchange="@(() => ToggleTaskStatus(task))" />
               <span class="@((task.IsComplete ? "completed-task" : ""))">
                 @task.TaskName
               </span>
             </div>
             <div class="p-1">
-              <button type="button" class="btn btn-outline-danger btn-sm" title="Delete task"
-                @onclick="@(() => DeleteTask(task))">
+              <button type="button" class="btn btn-danger btn-sm" title="Delete task" @onclick=@(() => DeleteTask(task))>
                 Delete
               </button>
             </div>
