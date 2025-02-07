@@ -1,10 +1,10 @@
-using MeBlazor.Api;
 using MeBlazor.Api.Data;
 using MeBlazor.Api.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var config = builder.Configuration;
 
 
 // CORS
@@ -23,11 +23,17 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+}
+
+var connectionString = config["DB_CONNECTION_STRING"] 
+?? throw new OperationException("Provided db connectionString");
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlite("Data Source=./sqlite.db");
+    options.UseNpgsql(connectionString);
 
 });
 

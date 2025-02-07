@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 
 namespace MeBlazor.Api.Data
@@ -21,7 +20,7 @@ namespace MeBlazor.Api.Data
             _context.Remove(item);
         }
 
-        public async Task<TaskItem>? Get(string Id)
+        public async Task<TaskItem>? Get(Guid Id)
         {
             var item = await _context.TaskItems.FirstOrDefaultAsync(item => item.Id == Id);
             return item;
@@ -37,7 +36,7 @@ namespace MeBlazor.Api.Data
             await _context.SaveChangesAsync();
         }
 
-        public async void Update(string Id, TaskItem item)
+        public async void Update(Guid Id, TaskItem item)
         {
             if (await _context.TaskItems.FirstOrDefaultAsync(item => item.Id == Id) is not null)
                 _context.Update(item);

@@ -5,7 +5,7 @@
 namespace MeBlazor.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class entityuseguid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,9 +14,11 @@ namespace MeBlazor.Api.Migrations
                 name: "TaskItems",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "TEXT", nullable: false),
-                    taskname = table.Column<string>(type: "TEXT", nullable: false),
-                    iscomplete = table.Column<bool>(type: "INTEGER", nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    title = table.Column<string>(type: "text", nullable: false),
+                    isdone = table.Column<bool>(type: "boolean", nullable: false),
+                    status = table.Column<byte>(type: "smallint", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

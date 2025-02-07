@@ -26,7 +26,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddHttpClient("weather-api", o =>
 {
-    var baseAddress = config["WEATHER_API_ENDPOINT"]!;
+    var baseAddress = config["API_ENDPOINT"]!;
     o.BaseAddress = new Uri(baseAddress);
 });
 

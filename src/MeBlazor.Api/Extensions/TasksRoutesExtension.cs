@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using MeBlazor.Api.Data;
 
 namespace MeBlazor.Api.Extensions
@@ -21,7 +17,7 @@ namespace MeBlazor.Api.Extensions
                 return Results.Ok(items.ToList().Select(item => item.ReadToDto()));
             });
 
-            groups.MapGet("/{id}", async (IDbStore store, string Id) =>
+            groups.MapGet("/{id:guid}", async (IDbStore store, Guid Id) =>
             {
                 var item = await store.Get(Id);
                 if (item == null) return Results.NotFound();
@@ -33,21 +29,21 @@ namespace MeBlazor.Api.Extensions
             {
                 var taskitem = TaskItem.CreateFromDto(dto);
                 await store.Add(taskitem);
-                await store.Save();
+                await store.SaveAsync();
                 return Results.Created($"/GetTask/{taskitem.Id}", taskitem.ReadToDto());
 
             });
-            groups.MapDelete("/{id}", async (IDbStore store, string Id) =>
+            groups.MapDelete("/{id:guid}", async (IDbStore store, Guid Id) =>
             {
                 var item = await store.Get(Id);
                 if (item == null) return Results.NotFound();
                 store.Delete(item);
-                await store.Save();
+                await store.SaveAsync();
                 return Results.NoContent();
             });
 
 
-            groups.MapPut("/{id}", async (IDbStore store, string Id, TaskItemReadDto dto) =>
+            groups.MapPut("/{id:guid}", async (IDbStore store, Guid Id, TaskItemReadDto dto) =>
             {
                 var item = await store.Get(Id);
                 if (item == null || item.Id != dto.Id)
@@ -55,7 +51,7 @@ namespace MeBlazor.Api.Extensions
 
                 // store.Update(Id, item);
                 item.UpdateFromDto(dto);
-                await store.Save();
+                await store.SaveAsync();
                 return Results.NoContent();
             });
         }

@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MeBlazor.Shared.Tasks
+namespace MeBlazor.Shared.Entities
 {
     public class Entity
     {
         [Required]
         [Key]
-        [Column(name:"id")]
-        public string? Id { get; set; }
+        [Column(name: "id")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; } = Guid.NewGuid();
     }
 }

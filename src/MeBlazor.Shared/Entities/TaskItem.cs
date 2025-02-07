@@ -4,8 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using MeBlazor.Shared.Dtos;
 
-namespace MeBlazor.Shared.Tasks
+namespace MeBlazor.Shared.Entities
 {
     public class TaskItem : Entity
     {
@@ -15,7 +16,7 @@ namespace MeBlazor.Shared.Tasks
         [Column(name: "isdone")]
         public bool IsDone { get; set; } = false;
         [Column(name: "status")]
-        public TaskStatus Status { get; set; } = TaskStatus.TODO;
+        public TaskItemStatus Status { get; set; } = TaskItemStatus.TODO;
 
         public string? Description { get; set; }
 
@@ -23,7 +24,6 @@ namespace MeBlazor.Shared.Tasks
         {
             return new TaskItem()
             {
-                Id = Guid.NewGuid().ToString(),
                 Title = dto.TaskName,
                 IsDone = false
             };
@@ -33,15 +33,17 @@ namespace MeBlazor.Shared.Tasks
         {
             return new TaskItemReadDto()
             {
-                Id = this.Id,
-                TaskName = this.Title,
-                IsComplete = this.IsDone,
+                Id = Id,
+                TaskName = Title,
+                IsComplete = IsDone,
+                Status = Status,
+
             };
         }
         public void UpdateFromDto(TaskItemReadDto dto)
         {
-            this.Title = dto.TaskName;
-            this.IsDone = dto.IsComplete;
+            Title = dto.TaskName;
+            IsDone = dto.IsComplete;
         }
     }
 }
