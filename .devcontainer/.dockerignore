@@ -1,0 +1,29 @@
+# .dockerignore for ASP.NET Core Project
+
+# Ignore bin and obj folders (build artifacts)
+bin/
+obj/
+
+# Ignore user-specific files
+.vscode/
+.idea/
+*.user
+*.userosscache
+*.suo
+*.swp
+*.sln.docstates
+
+# Ignore Dockerfile and .dockerignore itself (you don’t need these in the image)
+Dockerfile
+.dockerignore
+
+# Ignore ASP.NET Core development certificates (for local development)
+*.pfx
+
+# Ignore build and publish output (optional)
+publish/
+
+# Ignore any other files you don't want to copy to the container
+*.log
+*.md
+*.txt

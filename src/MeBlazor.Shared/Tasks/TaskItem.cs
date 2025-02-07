@@ -10,18 +10,22 @@ namespace MeBlazor.Shared.Tasks
     public class TaskItem : Entity
     {
         [Required]
-        [Column(name: "taskname")]
-        public string TaskName { get; set; }
-        [Column(name: "iscomplete")]
-        public bool IsComplete { get; set; } = false;
+        [Column(name: "title")]
+        public string Title { get; set; }
+        [Column(name: "isdone")]
+        public bool IsDone { get; set; } = false;
+        [Column(name: "status")]
+        public TaskStatus Status { get; set; } = TaskStatus.TODO;
+
+        public string? Description { get; set; }
 
         public static TaskItem CreateFromDto(TaskItemCreateDto dto)
         {
             return new TaskItem()
             {
                 Id = Guid.NewGuid().ToString(),
-                TaskName = dto.TaskName,
-                IsComplete = false
+                Title = dto.TaskName,
+                IsDone = false
             };
         }
 
@@ -30,14 +34,14 @@ namespace MeBlazor.Shared.Tasks
             return new TaskItemReadDto()
             {
                 Id = this.Id,
-                TaskName = this.TaskName,
-                IsComplete = this.IsComplete,
+                TaskName = this.Title,
+                IsComplete = this.IsDone,
             };
         }
         public void UpdateFromDto(TaskItemReadDto dto)
         {
-            this.TaskName = dto.TaskName;
-            this.IsComplete = dto.IsComplete;
+            this.Title = dto.TaskName;
+            this.IsDone = dto.IsComplete;
         }
     }
 }

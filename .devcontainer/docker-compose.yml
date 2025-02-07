@@ -1,0 +1,17 @@
+services:
+  web:
+    image: mcr.microsoft.com/devcontainers/dotnet:9.0
+    command: sleep infinity
+    environment:
+      - WEATHER_API_ENDPOINT=http://api:8080
+    volumes:
+      # - ../MeBlazor.sln:/workspaces/MeBlazor.sln:cached
+      - ../src/Meblazor.Shared:/workspaces/src/Meblazor.Shared:cached
+      - ../src/Meblazor.Web:/workspaces/src/Meblazor.Web:cached
+  api:
+    image: mcr.microsoft.com/devcontainers/dotnet:9.0
+    command: sleep infinity
+    volumes:
+      # - ../MeBlazor.sln:/workspaces/MeBlazor.sln:cached
+      - ../src/Meblazor.Shared:/workspaces/src/Meblazor.Shared:cached
+      - ../src/Meblazor.Api:/workspaces/src/Meblazor.Api:cached
