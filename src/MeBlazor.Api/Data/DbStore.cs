@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeBlazor.Api.Data
 {
-    public class DbStore : IDbStore
+    public class DbStore 
     {
         private readonly AppDbContext _context;
 

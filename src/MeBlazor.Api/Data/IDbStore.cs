@@ -1,7 +1,7 @@
 
 namespace MeBlazor.Api.Data
 {
-    public interface IDbStore : IEntityRepo<TaskItem>
+    public interface IDbStore<T> : IEntityRepo<TaskItem>
     {
 
     }

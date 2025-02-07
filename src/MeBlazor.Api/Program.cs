@@ -37,7 +37,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 });
 
-builder.Services.AddScoped<IDbStore, DbStore>();
+// builder.Services.AddScoped<IDbStore, DbStore>();
+builder.Services.AddScoped<ICommonRepo<TaskItem>, CommonRepo<TaskItem>>();
 
 
 

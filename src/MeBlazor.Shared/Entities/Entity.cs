@@ -12,7 +12,7 @@ namespace MeBlazor.Shared.Entities
         [Required]
         [Key]
         [Column(name: "id")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        // [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; } = Guid.NewGuid();
     }
 }

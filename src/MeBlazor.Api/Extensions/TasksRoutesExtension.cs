@@ -10,14 +10,14 @@ namespace MeBlazor.Api.Extensions
             var groups = app.MapGroup("/api/taskitems")
             .WithTags("tasks");
 
-            groups.MapGet("/", async (IDbStore store) =>
+            groups.MapGet("/", async (ICommonRepo<TaskItem> store) =>
             {
                 var items = await store.GetAll();
 
                 return Results.Ok(items.ToList().Select(item => item.ReadToDto()));
             });
 
-            groups.MapGet("/{id:guid}", async (IDbStore store, Guid Id) =>
+            groups.MapGet("/{id:guid}", async (ICommonRepo<TaskItem> store, Guid Id) =>
             {
                 var item = await store.Get(Id);
                 if (item == null) return Results.NotFound();
@@ -25,7 +25,7 @@ namespace MeBlazor.Api.Extensions
 
             }).WithName("GetTask");
 
-            groups.MapPost("/", async (IDbStore store, TaskItemCreateDto dto) =>
+            groups.MapPost("/", async (ICommonRepo<TaskItem> store, TaskItemCreateDto dto) =>
             {
                 var taskitem = TaskItem.CreateFromDto(dto);
                 await store.Add(taskitem);
@@ -33,7 +33,7 @@ namespace MeBlazor.Api.Extensions
                 return Results.Created($"/GetTask/{taskitem.Id}", taskitem.ReadToDto());
 
             });
-            groups.MapDelete("/{id:guid}", async (IDbStore store, Guid Id) =>
+            groups.MapDelete("/{id:guid}", async (ICommonRepo<TaskItem> store, Guid Id) =>
             {
                 var item = await store.Get(Id);
                 if (item == null) return Results.NotFound();
@@ -43,7 +43,7 @@ namespace MeBlazor.Api.Extensions
             });
 
 
-            groups.MapPut("/{id:guid}", async (IDbStore store, Guid Id, TaskItemReadDto dto) =>
+            groups.MapPut("/{id:guid}", async (ICommonRepo<TaskItem> store, Guid Id, TaskItemReadDto dto) =>
             {
                 var item = await store.Get(Id);
                 if (item == null || item.Id != dto.Id)
