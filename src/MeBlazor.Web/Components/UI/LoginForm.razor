@@ -1,0 +1,17 @@
+@rendermode InteractiveServer
+<form method="post" @formname="login" data-enhance @onsubmit="LoginAsync" >
+  <AntiforgeryToken />
+  @* <DataAnnotationsValidator /> *@
+  <div><label for="username">Username:@Username</label>
+    <input type="text" @bind-value=@Username />
+  </div>
+  <div class=" mt-3"><button class="btn btn-primary">Login</button>
+  </div>
+</form>
+
+@code {
+
+  [Parameter] public string Username { get; set; }
+  [Parameter] public EventCallback LoginAsync { get; set; }
+
+}

@@ -2,6 +2,7 @@
 @attribute [StreamRendering]
 @attribute [Authorize]
 @inject IHttpClientFactory httpClientFactory
+@inject ILogger<Weather> logger
 
 <PageTitle>Weather</PageTitle>
 
@@ -45,9 +46,17 @@ else
     protected override async Task OnInitializedAsync()
     {
         weatherApiClient = httpClientFactory.CreateClient("weather-api");
+        try
+        {
+            var response = await weatherApiClient.GetFromJsonAsync<WeatherForecast[]>("/weatherforecast/");
+            forecasts = response != null ? response.ToArray() : [];
 
-        var response = await weatherApiClient.GetFromJsonAsync<WeatherForecast[]>("/weatherforecast/");
-        forecasts = response != null ? response.ToArray() : [];
+        }
+        catch (System.Net.Http.HttpRequestException ex)
+        {
+            logger.LogError($"backend api is not reachable {ex}");
+            forecasts = null;
+        }
     }
 
     private class WeatherForecast
