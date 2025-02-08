@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MeBlazor.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250207102550_entity-use-guid")]
-    partial class entityuseguid
+    [Migration("20250208014136_weather-forecast")]
+    partial class weatherforecast
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,31 @@ namespace MeBlazor.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TaskItems");
+                });
+
+            modelBuilder.Entity("MeBlazor.Shared.Entities.WeatherForecast", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Summary")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<float>("TemperatureC")
+                        .HasColumnType("real");
+
+                    b.Property<float>("TemperatureF")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WeatherForecasts");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,35 +6,67 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MeBlazor.Api.Data
 {
-    public class CommonRepo<T> : ICommonRepo<Entity> where T : Entity
+    public class CommonRepo<T> : ICommonRepo<T> where T: Entity 
     {
         private readonly DbContext _dbContext;
-        private DbSet<Entity> _dbSet;
+        private DbSet<T> _dbSet;
 
-        public CommonRepo(DbContext dbContext)
+        public CommonRepo(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-            _dbSet = _dbContext.Set<Entity>();
+            _dbSet = _dbContext.Set<T>();
         }
-        public async Task Add(Entity item) =>
+
+        // public Task Add(T item)
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public void Delete(T item)
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public Task<T>? Get(Guid Id)
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public Task<IList<T>> GetAll()
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public Task SaveAsync()
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+        // public void Update(Guid Id, T item)
+        // {
+        //     throw new NotImplementedException();
+        // }
+
+
+        public async Task Add(T item) =>
             await _dbSet.AddAsync(item);
 
 
-        public void Delete(Entity item) => _dbSet.Remove(item);
+        public void Delete(T item) => _dbSet.Remove(item);
 
 
-        public async Task<Entity>? Get(Guid Id)
+        public async Task<T>? Get(Guid Id)
         {
             return await _dbSet.FirstOrDefaultAsync(item => item.Id == Id);
         }
 
-        public async Task<IList<Entity>> GetAll() => await _dbSet.ToListAsync();
+        public async Task<IList<T>> GetAll() => await _dbSet.ToListAsync();
 
 
         public async Task SaveAsync() => await _dbContext.SaveChangesAsync();
 
 
-        public void Update(Guid Id, Entity item)
+        public void Update(Guid Id, T item)
         {
             var _existingItem = _dbSet.FirstOrDefaultAsync(item => item.Id == Id);
             if (_existingItem == null) return;

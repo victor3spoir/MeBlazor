@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MeBlazor.Api.Data
+namespace MeBlazor.Api.Data;
+
+public interface ICommonRepo<T> : IEntityRepo<T> where T : Entity
 {
-    public interface ICommonRepo<T> :IEntityRepo<T> where T : Entity
-    {
-    }
 }

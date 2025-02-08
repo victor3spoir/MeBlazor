@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MeBlazor.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class entityuseguid : Migration
+    public partial class weatherforecastupdate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,6 +25,21 @@ namespace MeBlazor.Api.Migrations
                 {
                     table.PrimaryKey("PK_TaskItems", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "WeatherForecasts",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    TemperatureC = table.Column<float>(type: "real", nullable: false),
+                    TemperatureF = table.Column<float>(type: "real", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Summary = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WeatherForecasts", x => x.id);
+                });
         }
 
         /// <inheritdoc />
@@ -31,6 +47,9 @@ namespace MeBlazor.Api.Migrations
         {
             migrationBuilder.DropTable(
                 name: "TaskItems");
+
+            migrationBuilder.DropTable(
+                name: "WeatherForecasts");
         }
     }
 }
