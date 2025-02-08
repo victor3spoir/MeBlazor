@@ -1,0 +1,14 @@
+{
+  "name": "api",
+  "dockerComposeFile":["../docker-compose.yml"],
+  "service": "api",
+  "workspaceFolder": "/workspaces",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "k--kato.docomment"
+      ]
+    }
+  }
+}

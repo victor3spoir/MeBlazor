@@ -1,6 +1,6 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">MeBlazor.Web</a>
+        <NavLink class="navbar-brand" href="">MeBlazor</NavLink>
     </div>
 </div>
 
@@ -24,6 +24,18 @@
             <NavLink class="nav-link" href="/local-weather">
                 <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Local Weather
             </NavLink>
+        </div>
+        <div class="nav-item px-3">
+        <div>
+            <NavLink class="nav-link" href="/tasks">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Tasks
+            </NavLink>
+        </div>
+        <div>
+            <NavLink class="nav-link" href="/tasks/kanban">
+                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> Tasks Kanban
+            </NavLink>
+        </div>
         </div>
         <div class="nav-item px-3">
             <AuthorizeView>

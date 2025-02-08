@@ -1,0 +1,46 @@
+networks:
+  appnet:
+    name: appnet
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.web
+    image: meblazor:dev
+    networks:
+      - appnet
+    ports:
+      - 60000:8080
+    environment:
+      - API_ENDPOINT=http://api:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    image: meblazor:dev
+    networks:
+      - appnet
+    environment:
+      - ALLOWED_URLS=http://web:8080
+      - ASPNETCORE_ENVIRONMENT=Development
+  pgsql:
+    image: postgres:17-alpine
+    networks:
+      - appnet
+    ports:
+      - 35432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+  pgadmin:
+    image: dpage/pgadmin4:9
+    restart: unless-stopped
+    networks:
+      - appnet
+    ports:
+      - 39090:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@local.host
+      - PGADMIN_DEFAULT_PASSWORD=password
