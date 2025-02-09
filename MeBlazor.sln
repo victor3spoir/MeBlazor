@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeBlazor.Api", "src\MeBlazo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeBlazor.Shared", "src\MeBlazor.Shared\MeBlazor.Shared.csproj", "{0D88361D-C571-46CE-A6C5-473922420B46}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeBlazor.Components", "src\MeBlazor.Components\MeBlazor.Components.csproj", "{DCF53204-F1CD-4F32-A34A-9EFFD16BC07D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +34,15 @@ Global
 		{0D88361D-C571-46CE-A6C5-473922420B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D88361D-C571-46CE-A6C5-473922420B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D88361D-C571-46CE-A6C5-473922420B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCF53204-F1CD-4F32-A34A-9EFFD16BC07D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCF53204-F1CD-4F32-A34A-9EFFD16BC07D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCF53204-F1CD-4F32-A34A-9EFFD16BC07D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCF53204-F1CD-4F32-A34A-9EFFD16BC07D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{D4FB6EB5-A5C3-4CBD-81F1-13FA6F8EC559} = {B1E61613-59A4-4D58-8AAD-DE14D693A271}
 		{DBD42AB5-2EBA-4477-95A2-965F7A98DE3A} = {B1E61613-59A4-4D58-8AAD-DE14D693A271}
 		{0D88361D-C571-46CE-A6C5-473922420B46} = {B1E61613-59A4-4D58-8AAD-DE14D693A271}
+		{DCF53204-F1CD-4F32-A34A-9EFFD16BC07D} = {B1E61613-59A4-4D58-8AAD-DE14D693A271}
 	EndGlobalSection
 EndGlobal

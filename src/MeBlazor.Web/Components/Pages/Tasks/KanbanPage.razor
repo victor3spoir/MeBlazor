@@ -1,10 +1,23 @@
 @page "/tasks/kanban"
-
+@inject IHttpClientFactory httpClientFactory
 <div>
   <h1>Tasks like kanban interface</h1>
   <div class="d-flex gap-2 rounded border ">
-    <Column Title="Todos" />
-    <Column Title="Pending" />
-    <Column Title="Done" />
+    <Column Title="Todos" tasks=tasks status=TaskItemStatus.TODO />
+    <Column Title="Pending" tasks=tasks status=TaskItemStatus.PENDING />
+    <Column Title="Done" tasks=tasks status=TaskItemStatus.DONE />
   </div>
 </div>
+
+@code {
+  HttpClient backendClient;
+  List<TaskItemReadDto> tasks=new();
+  protected override async Task OnInitializedAsync()
+  {
+    await base.OnInitializedAsync();
+    backendClient = httpClientFactory.CreateClient("weather-api");
+
+    tasks = await backendClient.GetFromJsonAsync<List<TaskItemReadDto>>("/api/taskitems");
+
+  }
+}

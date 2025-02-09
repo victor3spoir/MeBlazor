@@ -2,6 +2,7 @@
 @inject NavigationManager navManager
 @using Microsoft.AspNetCore.Components.Forms
 @using System.ComponentModel.DataAnnotations
+@inject AuthService authService
 
 <div>
   <h2>Login</h2>
@@ -24,6 +25,12 @@
         <button class="btn btn-primary" type="submit">Login</button>
         <button type="reset" class="btn btn-danger">Reset</button>
       </div>
+      <div class="py-3">
+        @if (!String.IsNullOrEmpty(authMessage))
+        {
+          <p class="alert alert-danger py-2 py-1">@authMessage</p>
+        }
+      </div>
     </EditForm>
   </div>
 </div>
@@ -32,6 +39,7 @@
   [SupplyParameterFromForm] public LoginDto loginDto { get; set; }
   [CascadingParameter] public HttpContext context { get; set; } = default!;
   [SupplyParameterFromQuery] public string returnUrl { get; set; } = default!;
+  string authMessage = string.Empty;
 
   protected override async Task OnInitializedAsync()
   {
@@ -42,11 +50,16 @@
 
   async Task LoginAsync()
   {
-
+    if (authService.VerifyUser(loginDto.Username, loginDto.Password) != true)
+    {
+      authMessage = "Invalid credentials";
+      StateHasChanged();
+      return;
+    }
+    authMessage = "";
     Claim[] claims = new[]{
 new Claim(ClaimTypes.Name, loginDto.Username),
 new Claim(ClaimTypes.Email, "username@gmail.com"),
-new Claim(ClaimTypes.Name, "username")
 };
 
     ClaimsIdentity identity = new(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,12 +1,18 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MeBlazor.Shared.Entities;
 
-[Flags]
-public enum TaskItemStatus : byte
+// [Flags]
+public enum TaskItemStatus
 {
-    TODO, PENDING, DONE
+    [Description("Todo")]
+    TODO,
+    [Description("Pending")]
+    PENDING,
+    [Description("Done")]
+    DONE
 }

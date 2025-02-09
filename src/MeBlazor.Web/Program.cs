@@ -1,6 +1,8 @@
 using MeBlazor.Web.Components;
 using MeBlazor.Web.Extensions;
+using MeBlazor.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.FluentUI.AspNetCore.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -24,12 +26,18 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddFluentUIComponents();
+builder.Services.AddDataGridODataAdapter();
+
+
 builder.Services.AddHttpClient("weather-api", o =>
 {
     var baseAddress = config["API_ENDPOINT"]!;
     o.BaseAddress = new Uri(baseAddress);
 });
 
+builder.Services.AddSingleton<AuthService>(new AuthService());
+builder.Services.AddScoped<MyStateService>();
 
 var app = builder.Build();
 

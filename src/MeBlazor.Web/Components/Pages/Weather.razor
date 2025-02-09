@@ -1,14 +1,23 @@
 ﻿@page "/local-weather"
 @attribute [StreamRendering]
 @attribute [Authorize]
+@rendermode InteractiveServer
 @inject IHttpClientFactory httpClientFactory
 @inject ILogger<Weather> logger
+@inject MyStateService myStateService
+
+@implements IDisposable
+
+
 
 <PageTitle>Weather</PageTitle>
 
 <h1 class="">Local Weatherforecast loaded from api</h1>
 
 <p>This component demonstrates showing data.</p>
+<button class="btn btn-primary my-3" @onpointerdown=@(()=>ToogleClick())>
+    @(myStateService.ShowInCelcius == true ? "Hide Celcius" : "Show Celcius")
+</button>
 
 @if (forecasts == null)
 {
@@ -20,7 +29,11 @@ else
         <thead class="table-dark">
             <tr>
                 <th>Date</th>
-                <th aria-label="Temperature in Celsius">Temp. (C)</th>
+                @if (myStateService.ShowInCelcius)
+                {
+                    <th aria-label="Temperature in Celsius">Temp. (C)</th>
+
+                }
                 <th aria-label="Temperature in Farenheit">Temp. (F)</th>
                 <th>Summary</th>
             </tr>
@@ -30,17 +43,25 @@ else
             {
                 <tr>
                     <td>@forecast.Date.ToLongDateString()</td>
-                    <td>@forecast.TemperatureC</td>
+                    @if (myStateService.ShowInCelcius)
+                    {
+
+                        <td>@forecast.TemperatureC</td>
+                    }
                     <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
                 </tr>
             }
         </tbody>
     </table>
+
+
+
 }
 
 @code {
     private WeatherForecast[]? forecasts;
+    private IQueryable<WeatherForecast>? forecastsQuery;
     public HttpClient weatherApiClient;
 
     protected override async Task OnInitializedAsync()
@@ -50,6 +71,7 @@ else
         {
             var response = await weatherApiClient.GetFromJsonAsync<WeatherForecast[]>("/weatherforecast/");
             forecasts = response != null ? response.ToArray() : [];
+            forecastsQuery = forecasts.AsQueryable();
 
         }
         catch (System.Net.Http.HttpRequestException ex)
@@ -57,6 +79,15 @@ else
             logger.LogError($"backend api is not reachable {ex}");
             forecasts = null;
         }
+        myStateService.ShowInCelciusChanged += (sender, e) => StateHasChanged();
+    }
+    void ToogleClick() => myStateService.SetShowInCelcius(this, !myStateService.ShowInCelcius);
+
+
+
+    public void Dispose()
+    {
+        myStateService.ShowInCelciusChanged -= (sender, e) => StateHasChanged();
     }
 
     private class WeatherForecast

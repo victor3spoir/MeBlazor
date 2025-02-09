@@ -1,0 +1,14 @@
+@rendermode InteractiveServer
+<article class="card my-2 outline-1 p-2" draggable="true" @ondrag=@OnDrag>
+  <h4>@task.TaskName</h4>
+</article>
+
+@code {
+  [Parameter] public TaskItemReadDto task { get; set; }
+
+  void OnDrag(DragEventArgs e)
+  {
+    Console.WriteLine(e);
+    Console.WriteLine(task.Id);
+  }
+}
