@@ -19,7 +19,7 @@ export default async function Page() {
       <div>
         <Table>
           <TableCaption>Local weatherforecasts</TableCaption>
-          <TableHeader>
+          <TableHeader className="bg-gray-100">
             <TableRow>
               <TableHead>Date</TableHead>
               <TableHead>Temp. C</TableHead>

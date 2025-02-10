@@ -18,4 +18,19 @@ export class Fetcher<T> {
       }
     })).data
   }
+
+  async delete(id: string) {
+    const response = await this._client.delete(`${this.route}/${id}`)
+    return response.data
+  }
+
+  async create(data: any) {
+    return await this._client.post(this.route, data, {
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
+  }
+
 }

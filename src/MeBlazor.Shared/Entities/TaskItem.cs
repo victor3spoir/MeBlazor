@@ -11,8 +11,8 @@ namespace MeBlazor.Shared.Entities
     public class TaskItem : Entity
     {
         [Required]
-        [Column(name: "title")]
-        public string Title { get; set; }
+        [Column(name: "name")]
+        public string TaskName { get; set; }
         [Column(name: "isdone")]
         public bool IsDone { get; set; } = false;
         [Column(name: "status")]
@@ -24,7 +24,7 @@ namespace MeBlazor.Shared.Entities
         {
             return new TaskItem()
             {
-                Title = dto.TaskName,
+                TaskName = dto.TaskName,
                 IsDone = false
             };
         }
@@ -34,16 +34,19 @@ namespace MeBlazor.Shared.Entities
             return new TaskItemReadDto()
             {
                 Id = Id,
-                TaskName = Title,
+                TaskName = TaskName,
                 IsComplete = IsDone,
                 Status = Status,
 
             };
         }
-        public void UpdateFromDto(TaskItemReadDto dto)
+        public void UpdateFromDto(TaskItemUpdateDto dto)
         {
-            Title = dto.TaskName;
-            IsDone = dto.IsComplete;
+            if(dto.TaskName is not null)
+                TaskName = dto.TaskName;
+            if (dto.IsComplete is not null)
+                IsDone = (bool)dto.IsComplete;
+            Status = (TaskItemStatus)dto.Status;
         }
     }
 }

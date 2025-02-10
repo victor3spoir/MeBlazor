@@ -1,0 +1,7 @@
+FROM node:22-alpine as base
+WORKDIR /usr/app
+COPY src/meblazor-next/package*.json .
+RUN npm i --legacy-peer-deps
+ENV NEXT_TELEMETRY_DISABLED=1
+COPY src/meblazor-next/. .
+RUN npm run build

@@ -25,20 +25,29 @@
 
         @foreach (var task in tasks)
         {
-          <div class="d-flex  mx-auto border border-dark rounded-2 p-1 my-2" @key="task">
+          <article class="d-flex  mx-auto border border-dark rounded-2 p-1 my-2" @key="task.Id">
             <div class="p-2 flex-fill">
-              <input type="checkbox" class="form-check-inline" checked="@task.IsComplete"
+              <input type="checkbox" class="form-check-inline" checked="@(task.Status == TaskItemStatus.DONE)"
                 @onchange="@(() => ToggleTaskStatus(task))" />
               <span class="@((task.IsComplete ? "completed-task" : ""))">
                 @task.TaskName
               </span>
             </div>
+            @* <div>
+              <select name="" id="" class="form-control">
+                @foreach (var status in Enum.GetValues(typeof(TaskItemStatus)).Cast<TaskItemStatus>().ToList())
+                {
+                  <option value=@status selected=@(status == task.Status)>@status.ToString()</option>
+
+                }
+              </select>
+            </div> *@
             <div class="p-1">
               <button type="button" class="btn btn-danger btn-sm" title="Delete task" @onclick=@(() => DeleteTask(task))>
                 Delete
               </button>
             </div>
-          </div>
+          </article>
         }
 
       }
@@ -82,15 +91,21 @@
 
   async Task ToggleTaskStatus(TaskItemReadDto item)
   {
-    var copyItem = item;
-    copyItem.IsComplete = !item.IsComplete;
-    var response = await httpClient.PutAsJsonAsync<TaskItemReadDto>($"{taskEndpoint}/{copyItem.Id}", copyItem);
-    if (!response.IsSuccessStatusCode)
+    try
     {
-      error = $"{response.ReasonPhrase} - {response.StatusCode.ToString()}";
-      return;
+      var copyItem = item;
+      copyItem.Status = copyItem.Status == TaskItemStatus.TODO ? TaskItemStatus.DONE : TaskItemStatus.TODO;
+      var response = await httpClient.PutAsJsonAsync<TaskItemUpdateDto>($"{taskEndpoint}/{copyItem.Id}",
+      TaskItemUpdateDto.FromReadDto(copyItem));
+      if (!response.IsSuccessStatusCode)
+      {
+        error = $"{response.ReasonPhrase} - {response.StatusCode.ToString()}";
+        return;
+      }
+      item.Status = copyItem.Status;
     }
-    item.IsComplete = copyItem.IsComplete;
+    catch (Exception ex)
+    { Console.WriteLine(ex); }
   }
 
   async Task DeleteTask(TaskItemReadDto item)
@@ -117,8 +132,7 @@
         error = response.ReasonPhrase;
         return;
       }
-      newTask = string.Empty;
-      await FetchTask();
+
     }
     catch (Exception) { }
   }

@@ -43,14 +43,12 @@ namespace MeBlazor.Api.Extensions
             });
 
 
-            groups.MapPut("/{id:guid}", async (ICommonRepo<TaskItem> store, Guid Id, TaskItemReadDto dto) =>
+            groups.MapPut("/{id:guid}", async (ICommonRepo<TaskItem> store, Guid Id, TaskItemUpdateDto dto) =>
             {
                 var item = await store.Get(Id);
-                if (item == null || item.Id != dto.Id)
-                    return Results.NotFound();
-
-                // store.Update(Id, item);
+                if (item is null) return Results.NotFound();
                 item.UpdateFromDto(dto);
+                store.Update(Id, item);
                 await store.SaveAsync();
                 return Results.NoContent();
             });

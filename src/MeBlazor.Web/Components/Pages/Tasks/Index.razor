@@ -4,7 +4,15 @@
 
 
 <div>
-  <TasksList httpClient=@httpClient />
+  <ErrorBoundary>
+    <ChildContent>
+      <TasksList httpClient=@httpClient />
+    </ChildContent>
+    <ErrorContent>
+      <p>@context.Message</p>
+      <button>Retry</button>
+    </ErrorContent>
+  </ErrorBoundary>
 </div>
 
 
@@ -37,7 +45,7 @@
       tasks = await httpClient.GetFromJsonAsync<List<TaskItemReadDto>>($"{taskEndpoint}");
     }
     catch (Exception) { error = "Error occurs"; }
-    ;
+  ;
   }
 
   async Task ToggleTaskStatus(TaskItemReadDto item)

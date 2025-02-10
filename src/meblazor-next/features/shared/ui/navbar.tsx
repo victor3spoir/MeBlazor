@@ -4,6 +4,7 @@ export default function Navbar() {
 
   const urls = [
     { name: "Home", link: "/" },
+    { name: "learn/upload-file", link: "/learn/upload-file" },
     { name: "Weather(Local)", link: "/local-weather" },
     { name: "Task", link: "/tasks" },
     { name: "Task(kanban)", link: "/tasks/kanban" },
@@ -17,7 +18,7 @@ export default function Navbar() {
       <nav>
         <ul className="flex items-center justify-start gap-3">
           {urls.map((url, index) => (
-            <li key={index}>
+            <li key={index} className="link-item">
               <Link href={url.link}>{url.name}</Link>
             </li>
           ))}

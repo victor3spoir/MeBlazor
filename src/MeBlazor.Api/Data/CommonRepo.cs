@@ -70,9 +70,9 @@ namespace MeBlazor.Api.Data
         {
             var _existingItem = _dbSet.FirstOrDefaultAsync(item => item.Id == Id);
             if (_existingItem == null) return;
-            _dbSet.Attach(item);
+            // _dbSet.Attach(item);
+            _dbSet.Update(item);
             _dbSet.Entry(item).State = EntityState.Modified;
-            throw new NotImplementedException();
         }
     }
 }
