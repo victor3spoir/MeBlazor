@@ -4,7 +4,7 @@ export default function Navbar() {
 
   const urls = [
     { name: "Home", link: "/" },
-    { name: "learn/upload-file", link: "/learn/upload-file" },
+    { name: "learns", link: "/learn" },
     { name: "Weather(Local)", link: "/local-weather" },
     { name: "Task", link: "/tasks" },
     { name: "Task(kanban)", link: "/tasks/kanban" },

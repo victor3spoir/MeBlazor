@@ -1,0 +1,14 @@
+input:user-valid {
+	border-color: green;
+}
+input:user-invalid:not(:focus) {
+	border-color: red;
+	animation: shake 0.7s linear both;
+}
+
+:is(form > div:has(input:user-invalid:not(:focus))) {
+	border-bottom: 1px solid red;
+
+	border-radius: 10px;
+	animation: shake 1s linear both;
+}

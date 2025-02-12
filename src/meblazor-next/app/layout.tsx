@@ -17,10 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`min-h-screen antialiased max-w-[800px] mx-auto` }
+        className={`min-h-screen flex flex-col antialiased max-w-[800px] mx-auto` }
       >
         <Navbar />
-        <div>
+        <div className="flex-grow">
           {children}
         </div>
       </body>
