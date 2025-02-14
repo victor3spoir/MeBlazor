@@ -1,0 +1,44 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MeBlazor.Api",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${workspaceFolder}/src/MeBlazor.Api/bin/Debug/net9.0/MeBlazor.Api.dll",
+      "preLaunchTask": "dotnet: build",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS":"http://*:5097",
+        "DB_CONNECTION_STRING": "host=localhost;port=35432;database=postgres;username=postgres;password=postgres;"
+      }
+    },
+    {
+      "type": "msedge",
+      "request": "launch",
+      "name": "Meblazor.Next",
+      "preLaunchTask": "npm: dev - src/meblazor-next",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/src/meblazor-next",
+      "env": {
+        "BACKEND_ENDPOINT": "http://localhost:5097"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(http?://\\S+)"
+      },
+    },
+  ],
+  "compounds": [
+    {
+      "name": "Compound",
+      "configurations": ["MeBlazor.Api", "Meblazor.Next"]
+    }
+  ]
+}

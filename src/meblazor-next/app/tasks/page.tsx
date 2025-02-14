@@ -12,7 +12,14 @@ export default async function Page() {
     const fetcher = new Fetcher<TaskItem[]>("/api/taskitems");
     return await fetcher.getAll()
   }
-  const tasks: TaskItem[] = await fetchTask()
+  const { results: tasks, error } = await fetchTask()
+  if (error?.status === 500 || tasks === undefined) {
+    return (
+      <p>Error happens on the backend side <br />
+        please, try again later
+      </p>
+    )
+  }
 
   return (
     <div>

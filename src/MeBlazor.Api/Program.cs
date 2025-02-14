@@ -4,6 +4,7 @@ using MeBlazor.Api.Extensions;
 using MeBlazor.Api.Migrations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
@@ -77,9 +78,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 
-    using var scope = app.Services.CreateScope();
-    await using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
+    // try
+    // {
+    //     using var scope = app.Services.CreateScope();
+    //     await using var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    //     dbContext.Database.EnsureCreated();
+    //     dbContext.Database.Migrate();
+    // }
+    // catch (PostgresException ex) { app.Logger.LogWarning("already migrated {ex}", ex); }
 }
 
 if (args.ToList().Contains("--RunMigrations"))

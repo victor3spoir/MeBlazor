@@ -7,8 +7,5 @@ input:user-invalid:not(:focus) {
 }
 
 :is(form > div:has(input:user-invalid:not(:focus))) {
-	border-bottom: 1px solid red;
-
-	border-radius: 10px;
 	animation: shake 1s linear both;
 }

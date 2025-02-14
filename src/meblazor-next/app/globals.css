@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import url('./styles/validations.css');
 @import url('./styles/animations.css');
 @tailwind base;
@@ -10,6 +12,10 @@ body {
 
 @layer base {
 	:root {
+		--color-prim: light-dark(royalblue, gold);
+		--font-sans-popins: 'Poppins';
+		--font-serif-playfair: 'Playfair Display';
+		--font-roboto: 'Roboto';
 		--background: 0 0% 100%;
 		--foreground: 222.2 84% 4.9%;
 		--card: 0 0% 100%;
@@ -69,7 +75,13 @@ body {
 		@apply border-border;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground font-popins;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		@apply font-playfair;
 	}
 
 	div {
@@ -83,7 +95,41 @@ body {
 
 @layer utilities {
 	.link-item {
-		@apply font-bold text-gray-500 hover:text-indigo-700;
+		@apply text-sky-500 hover:text-sky-700;
 		transition: color 1s ease-in-out both;
+	}
+
+	.section {
+		@apply my-5;
+	}
+	.section-heading {
+		@apply text-3xl mb-2 mt-3;
+	}
+}
+
+.info-card {
+	@apply flex flex-col gap-3 overflow-hidden rounded-lg text-center border border-gray-50 shadow-lg;
+
+	.info-card__figure {
+		width: 100cqw;
+	}
+	.info-card__callout-btn {
+		display: none;
+	}
+}
+.c-container {
+	container: c-container/inline-size;
+}
+
+@container c-container (width > 500px) {
+	.info-card {
+		@apply flex-row text-left;
+		.info-card__callout{
+			@apply flex justify-between items-center;
+		}
+
+		.info-card__callout-btn {
+			display: block;
+		}
 	}
 }

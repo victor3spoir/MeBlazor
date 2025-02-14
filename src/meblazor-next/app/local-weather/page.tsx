@@ -1,5 +1,5 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { apiClient } from "@/features/shared/api-client"
+import { Fetcher } from "@/features/shared/fetchers"
 import PageHeader from "@/features/shared/ui/page-header"
 import { WeatherForecast } from "@/features/weather/definitions"
 
@@ -9,11 +9,20 @@ import { WeatherForecast } from "@/features/weather/definitions"
 
 export default async function Page() {
 
-  const forecasts = (await apiClient.get("/weatherforecast")).data as WeatherForecast[]
+  const fetcher = new Fetcher<WeatherForecast>("/weatherforecast")
+  const { results: forecasts, error } = await fetcher.getAll();
+
+  if (error?.status === 500 || forecasts === undefined) {
+    return (
+      <div>
+        <p>Error happens on backend, please try again later</p>
+        <p>{error?.message}</p>
+      </div>)
+  }
+
 
   return (
     <div>
-      <h2></h2>
       <PageHeader title="Local weatherforecast"
         description="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, culpa." />
       <div>
